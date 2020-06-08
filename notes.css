@@ -1,0 +1,78 @@
+header {
+  display: flex;
+  justify-content: center;
+  height: 220px;
+  margin-top: -40px;
+}
+header > p {
+  font-size: 80px;
+  font-family: "Sofia";
+  color: darkgreen;
+  font-weight: bold;
+}
+
+body {
+  background-image: url(notes_photos/tile.jpg);
+}
+section {
+  flex-direction: column;
+  display: flex;
+  justify-content: center;
+}
+#inputs_field {
+  position: absolute;
+  padding-top: 25px;
+  font-size: 20px;
+}
+#textarea {
+  width: 400px;
+  height: 150px;
+}
+
+.div_form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+#notes {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.add_note {
+  position: relative;
+}
+
+.delete {
+  position: absolute;
+  right: 23px;
+  top: 18px;
+}
+.add_text {
+  position: absolute;
+  top: 59px;
+  width: 100px;
+  right: 84px;
+}
+.add_time {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+}
+
+.add_date {
+  position: absolute;
+  bottom: 30px;
+  left: 10px;
+}
+/* .note_text , 
+.note_time , 
+.note_date{
+
+   position: absolute;
+} */
+
+/* .add_all_inputs {
+    position: absolute;
+} */
