@@ -27,6 +27,7 @@ section {
 #textarea {
   width: 400px;
   height: 150px;
+  background-color: papayawhip;
 }
 
 .div_form {
@@ -44,18 +45,22 @@ section {
   position: relative;
 }
 
-.delete {
+.delete{
   position: absolute;
   right: 23px;
   top: 18px;
+  color: red;
+  transition: ease-in-out;
 }
+
 .add_text {
   position: absolute;
   top: 59px;
   width: 100px;
   right: 84px;
+  word-wrap: break-word;
 }
-.add_time {
+/* .add_time {
   position: absolute;
   bottom: 10px;
   left: 10px;
@@ -65,7 +70,7 @@ section {
   position: absolute;
   bottom: 30px;
   left: 10px;
-}
+} */
 /* .note_text , 
 .note_time , 
 .note_date{

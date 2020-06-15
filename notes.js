@@ -1,75 +1,129 @@
 
- let  Notes=[];
+ var Notes=[];
+ let next_id = 1;
+
  const div = document.getElementById('notes');
  const form = document.getElementById('inputs_field');
  form.addEventListener('submit',add_note)
 
+ window.onload = function (e) {
+    if (localStorage.getItem('items')!==null) {
+       let temp = JSON.parse(localStorage.getItem('items'));
+      load_data(temp)
+      Notes=temp
+      } else {
+       Notes = []
+      }
+
+}
+    
+
 function add_note(e){
-    // var x = check_empty_fields();
-    // if(x){
-    //     break;
-    // }
-    // else{
-        e.preventDefault()
-        var image = document.createElement('div'); 
-        var x = document.createElement('button')
-        image.classList.add("add_note")
-        image.innerHTML='<img src = "notes_photos/notebg.png" >'
-        div.appendChild(image)
-        x.classList.add("delete")
-        x.innerHTML = "X";
-        image.appendChild(x);
-    
-        x.addEventListener('click', ()=>{ 
-            image.remove();
-            // clean_storage()
 
-       })
-       var petek = new Object();
-       petek["text"]=document.getElementById('textarea').value;
-       petek["time"]=document.getElementById('time').value ;
-       petek["date"]=document.getElementById('date').value;
-       Notes.push(petek)
+if(document.getElementById('textarea').value==""){
+    alert("insert note details please")
+    return;
+}
 
-        var note_text = document.createElement('div');
-        var note_time = document.createElement('div');
-        var note_date = document.createElement('div');
-        note_text.innerHTML = petek["text"];
-        note_time.innerHTML = petek["time"] ;
-        note_date.innerHTML = petek["date"] ;
-        note_text.classList.add("add_text")
-        note_time.classList.add("add_time")
-        note_date.classList.add("add_date")
-        image.appendChild(note_text)
-        image.appendChild(note_time)
-        image.appendChild(note_date)
+else if(document.getElementById('date').value==""){
+    alert("insert date please")
+    return;
+}
+else{
     
+    e.preventDefault()
+    var image = document.createElement('div'); 
+    var x = document.createElement('button')
+    image.classList.add("add_note")
+    image.innerHTML='<img src = "notes_photos/notebg.png" >'
+    div.appendChild(image)
+    x.classList.add("delete")
+    x.innerHTML = "X";
+    x.id= next_id;
+    image.appendChild(x);
+    var note_details = document.createElement('div')
+    note_details.innerHTML = create_petek() ;
+    note_details.classList.add("add_text")
+    image.appendChild(note_details)
+    set_localstorage(Notes) 
+
+   
+    x.addEventListener('click', ()=>{ 
         
-        
-        // localStorage.setItem('items', JSON.stringify(Notes));
-        // window.onload = function load_data(e);
+        image.remove()
+        Notes = Notes.filter(item => item.id !== parseInt(x.id))
+        update_all_id(x.id)
+
+        set_localstorage(Notes) 
+     
+   })
+   next_id++;
+}
+
     
-    
+      
+    }
+
+
+    function set_localstorage(Notes){
+        localStorage.setItem('items', JSON.stringify(Notes))
     }
    
-    
-// }
 
-// function check_empty_fields(){
-//     if(document.getElementById('textarea').value === ''){
-//         alert('please fill the text area')
-//         return true
+    function create_petek(){
+            var petek = new Object();
+            petek["text"]=document.getElementById('textarea').value;
+            petek["time"]=document.getElementById('time').value ;
+            petek["date"]=document.getElementById('date').value;
+            petek["id"]=Notes.length;
+            Notes.push(petek)
+        return petek.text + '<br><br><br>' + petek.date + '<br>' + petek.time ; 
+    }
+
+    function update_all_id(the_id){
+        for(var i =the_id;i<Notes.length;i++){
+              Notes[i].id-=1;
+        }
+
+    }
+    function load_data(arr){
+        for(var i = 0 ; i < arr.length;i++){
+            var image = document.createElement('div'); 
+            var x = document.createElement('button')
+            image.classList.add("add_note")
+            image.innerHTML='<img src = "notes_photos/notebg.png" >'
+            div.appendChild(image)
+            x.classList.add("delete")
+            x.innerHTML = "X";
+            x.id = next_id;
+            image.appendChild(x);
+            var note_details = document.createElement('div')
+            note_details.innerHTML = arr[i].text + '<br><br><br>' + arr[i].date + '<br>' + arr[i].time;
+            note_details.classList.add("add_text")
+            image.appendChild(note_details)
+            next_id++
+            x.addEventListener('click', ()=>{ 
+        
+                image.remove()
+                
+                Notes = Notes.filter(item => item.id !== parseInt(x.id))
+                localStorage.setItem('items', JSON.stringify(Notes))
+                // update_all_id(x_id)
+        
+                // set_localstorage(Notes) 
+             
+           })
+        }
       
-//     }
-//     if(document.getElementById('date').value ===
-//     ''){
-//         alert('please fill the date area')
-//         return true
-//     }
-//     else{
-//         return false
-//     }
-// }
+        
+    }
+
+   
+
+  
+    
+    
+
    
 
 
