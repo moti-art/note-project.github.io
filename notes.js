@@ -6,18 +6,6 @@
  const form = document.getElementById('inputs_field');
  form.addEventListener('submit',add_note)
 
- window.onload = function (e) {
-    if (localStorage.getItem('items')!==null) {
-       let temp = JSON.parse(localStorage.getItem('items'));
-      load_data(temp)
-      Notes=temp
-      } else {
-       Notes = []
-      }
-
-}
-    
-
 function add_note(e){
 
 if(document.getElementById('textarea').value==""){
@@ -32,90 +20,72 @@ else if(document.getElementById('date').value==""){
 else{
     
     e.preventDefault()
-    var image = document.createElement('div'); 
-    var x = document.createElement('button')
+        var petek = new Object();
+        petek["text"]=document.getElementById('textarea').value;
+        petek["date"]=document.getElementById('date').value;
+        petek["id"]=next_id;
+        Notes.push(petek)
+
+    const image = document.createElement('div'); 
+    const x_button = document.createElement('button')
     image.classList.add("add_note")
     image.innerHTML='<img src = "notes_photos/notebg.png" >'
     div.appendChild(image)
-    x.classList.add("delete")
-    x.innerHTML = "X";
-    x.id= next_id;
-    image.appendChild(x);
+    x_button.classList.add("delete")
+    x_button.innerHTML = "X";
+    x_button.id= next_id;
+    image.appendChild(x_button);
     var note_details = document.createElement('div')
-    note_details.innerHTML = create_petek() ;
+    note_details.innerHTML = petek.text + '<br><br><br>' + petek.date;
     note_details.classList.add("add_text")
     image.appendChild(note_details)
-    set_localstorage(Notes) 
+    localStorage.setItem('items', JSON.stringify(Notes))
+    localStorage.setItem('counter', JSON.stringify(next_id))
 
-   
-    x.addEventListener('click', ()=>{ 
-        
+    x_button.onclick = function(){
         image.remove()
-        Notes = Notes.filter(item => item.id !== parseInt(x.id))
-        update_all_id(x.id)
+        Notes = Notes.filter(item=>item.id!==parseInt(x_button.id))
+        localStorage.setItem('items',JSON.stringify(Notes))
 
-        set_localstorage(Notes) 
-     
-   })
-   next_id++;
-}
-
-    
-      
     }
 
-
-    function set_localstorage(Notes){
-        localStorage.setItem('items', JSON.stringify(Notes))
+   next_id++;
+}   
     }
    
+    window.onload = function () {
+        if (localStorage.getItem('items')!==null) {
+           let temp = JSON.parse(localStorage.getItem('items'));
+           next_id = JSON.parse(localStorage.getItem('counter'))+1;
 
-    function create_petek(){
-            var petek = new Object();
-            petek["text"]=document.getElementById('textarea').value;
-            petek["time"]=document.getElementById('time').value ;
-            petek["date"]=document.getElementById('date').value;
-            petek["id"]=Notes.length;
-            Notes.push(petek)
-        return petek.text + '<br><br><br>' + petek.date + '<br>' + petek.time ; 
-    }
-
-    function update_all_id(the_id){
-        for(var i =the_id;i<Notes.length;i++){
-              Notes[i].id-=1;
-        }
-
-    }
-    function load_data(arr){
-        for(var i = 0 ; i < arr.length;i++){
-            var image = document.createElement('div'); 
-            var x = document.createElement('button')
+           for(var i = 0 ; i < temp.length;i++){
+            const image = document.createElement('div'); 
+            const x_button = document.createElement('button')
             image.classList.add("add_note")
             image.innerHTML='<img src = "notes_photos/notebg.png" >'
             div.appendChild(image)
-            x.classList.add("delete")
-            x.innerHTML = "X";
-            x.id = next_id;
-            image.appendChild(x);
+            x_button.classList.add("delete")
+            x_button.innerHTML = "X";
+            x_button.id = temp[i].id;
+            image.appendChild(x_button);
             var note_details = document.createElement('div')
-            note_details.innerHTML = arr[i].text + '<br><br><br>' + arr[i].date + '<br>' + arr[i].time;
+            note_details.innerHTML = temp[i].text + '<br><br><br>' + temp[i].date ;
             note_details.classList.add("add_text")
             image.appendChild(note_details)
-            next_id++
-            x.addEventListener('click', ()=>{ 
-        
+
+            x_button.onclick = function(){
                 image.remove()
-                
-                Notes = Notes.filter(item => item.id !== parseInt(x.id))
-                localStorage.setItem('items', JSON.stringify(Notes))
-                // update_all_id(x_id)
+                Notes = Notes.filter(item=>item.id=!x_button.id)
+                localStorage.setItem('items',JSON.stringify(Notes))
         
-                // set_localstorage(Notes) 
-             
-           })
+            }
+            Notes = temp;
         }
-      
-        
+
+          } else {
+           Notes = []
+          }
+    
     }
 
    
