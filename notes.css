@@ -19,7 +19,7 @@ section {
   display: flex;
   justify-content: center;
 }
-#inputs_field {
+.inputs_field {
   position: absolute;
   padding-top: 25px;
   font-size: 20px;
@@ -41,23 +41,36 @@ section {
   flex-wrap: wrap;
 }
 
-.add_note {
+.new_note {
+  height: 241px;
+  width: 184px;
+  transition: ease-in-out 4s;
+}
+
+.delete {
   position: relative;
-}
-
-.delete{
-  position: absolute;
-  right: 23px;
-  top: 18px;
+  left: 4px;
+  top: -234px;
   color: red;
-
 }
-
+.delete:hover{
+  cursor: pointer;
+  zoom: 1;
+  filter: alpha(opacity=50);
+  opacity: 0.4;
+  -webkit-transition: opacity .80s ease-in-out;
+  -moz-transition: opacity .80s ease-in-out;
+  -ms-transition: opacity .80s ease-in-out;
+  -o-transition: opacity .80s ease-in-out;
+  transition: opacity .80s ease-in-out;
+}
 
 .add_text {
-  position: absolute;
-  top: 59px;
-  width: 100px;
-  right: 84px;
-  word-wrap: break-word;
+  position: relative;
+    top: -191px;
+    word-break: break-all;
+}
+.card_div{
+  height: 249px;
+  overflow: auto; 
 }
